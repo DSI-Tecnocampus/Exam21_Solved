@@ -32,17 +32,23 @@ public class NoteUseCases implements cat.tecnocampus.notes.application.portsIn.N
 
     @Override
     public Note createNote(Note note) {
-        //TODO: hexagonal port
-        boolean userExists = userExistsAdapter.userExists(note.getUserName());
+        String userExists = userExistsAdapter.userExists(note.getUserName());
 
-        if (userExists) {
+        if (userExists.equals("false")) {
+            throw new UserDoesNotExistException();
+        } else if (userExists.equals("true")) {
             note.setChecked(true);
-            note.setDateCreation(LocalDateTime.now());
-            note.setDateEdit(LocalDateTime.now());
-            return addNote(note);
+        } else if (userExists.equals("open")) {
+            note.setChecked(false);
         }
 
-        throw new UserDoesNotExistException();
+        return reallyCreateNote(note);
+    }
+
+    private Note reallyCreateNote(Note note) {
+        note.setDateCreation(LocalDateTime.now());
+        note.setDateEdit(LocalDateTime.now());
+        return addNote(note);
     }
 
     @Override

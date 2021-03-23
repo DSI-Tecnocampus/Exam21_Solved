@@ -1,0 +1,22 @@
+server.port: 8081
+
+resilience4j.circuitbreaker:
+  instances:
+    user:
+      registerHealthIndicator: true
+      ringBufferSizeInClosedState: 10
+      failureRateThreshold: 50
+      waitInterval: 10000
+      ringBufferSizeInHalfOpenState: 3
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      ignoreExceptions:
+        - org.springframework.web.client.HttpClientErrorException
+
+resilience4j.retry:
+  intances:
+    user:
+      maxRetryAttempts: 3
+      waitDuration: 1000
+      retryExceptions:
+        - org.springframework.web.client.HttpClientErrorException
+
