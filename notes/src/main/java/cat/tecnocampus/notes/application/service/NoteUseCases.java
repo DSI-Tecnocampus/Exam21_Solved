@@ -2,6 +2,7 @@ package cat.tecnocampus.notes.application.service;
 
 import cat.tecnocampus.notes.application.portsOut.NoteDAO;
 import cat.tecnocampus.notes.domain.Note;
+import cat.tecnocampus.notes.usersAdapter.UserExistsAdapter;
 import cat.tecnocampus.notes.webAdapter.UserDoesNotExistException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -14,10 +15,12 @@ public class NoteUseCases implements cat.tecnocampus.notes.application.portsIn.N
 
     private final NoteDAO noteDAO;
     private RestTemplate restTemplate;
+    private UserExistsAdapter userExistsAdapter;
 
-    public NoteUseCases(NoteDAO noteDAO, RestTemplate restTemplate) {
+    public NoteUseCases(NoteDAO noteDAO, RestTemplate restTemplate, UserExistsAdapter userExistsAdapter) {
         this.noteDAO = noteDAO;
         this.restTemplate = restTemplate;
+        this.userExistsAdapter = userExistsAdapter;
     }
 
     @Override
@@ -30,7 +33,7 @@ public class NoteUseCases implements cat.tecnocampus.notes.application.portsIn.N
     @Override
     public Note createNote(Note note) {
         //TODO: hexagonal port
-        boolean userExists = restTemplate.getForObject("http://localhost:8080/users/exists/" + note.getUserName(), boolean.class);
+        boolean userExists = userExistsAdapter.userExists(note.getUserName());
 
         if (userExists) {
             note.setChecked(true);
