@@ -20,3 +20,6 @@ resilience4j.retry:
       retryExceptions:
         - org.springframework.web.client.HttpClientErrorException
 
+spring.cloud.stream.bindings.receiverDeleteNotesChannel:
+  destination: deleteNotesChannel
+  group: notes

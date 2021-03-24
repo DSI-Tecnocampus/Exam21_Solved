@@ -1,9 +1,8 @@
 package cat.tecnocampus.users.application.service;
 
+import cat.tecnocampus.users.application.portsOut.DeleteUserNotes;
 import cat.tecnocampus.users.application.portsOut.UserDAO;
 import cat.tecnocampus.users.domain.User;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +11,11 @@ import java.util.List;
 public class UserUseCases implements cat.tecnocampus.users.application.portsIn.UserUseCases {
 
     private final UserDAO userDAO;
+    private final DeleteUserNotes deleteUserNotes;
 
-    public UserUseCases(UserDAO UserDAO) {
+    public UserUseCases(UserDAO UserDAO, DeleteUserNotes deleteUserNotes) {
         this.userDAO = UserDAO;
+        this.deleteUserNotes = deleteUserNotes;
     }
 
     @Override
@@ -36,12 +37,12 @@ public class UserUseCases implements cat.tecnocampus.users.application.portsIn.U
 
     @Override
     public User deleteUser(String username) {
-        User user = new User();
         if (userExists(username)) {
+            User user = new User();
             user = getUser(username);
             userDAO.delete(username);
+            deleteUserNotes.deleteUserNotes(username);
             return user;
-            //TODO send message to delete notes
         }
 
         return null;
