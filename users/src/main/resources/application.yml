@@ -1,0 +1,21 @@
+spring.cloud.stream.bindings.senderDeleteNotesChannel.destination: deleteNotesChannel
+
+server.port: 8082
+
+spring.application.name: users
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+    initialInstanceInfoReplicationIntervalSeconds: 5
+    registryFetchIntervalSeconds: 5
+  instance:
+    leaseRenewalIntervalInSeconds: 5
+    leaseExpirationDurationInSeconds: 5
+
+ribbon.ServerListRefreshInterval: 5000
+
+ribbon.NFLoadBalancerPingInterval: 5
+
+

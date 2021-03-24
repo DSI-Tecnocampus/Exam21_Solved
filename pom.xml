@@ -32,6 +32,8 @@
     <modules>
         <module>users</module>
         <module>notes</module>
+        <module>discovery</module>
+        <module>gateway</module>
     </modules>
 
     <properties>
