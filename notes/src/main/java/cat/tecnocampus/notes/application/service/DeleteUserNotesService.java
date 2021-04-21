@@ -1,4 +1,4 @@
-package cat.tecnocampus.notes.deleteUserNotesAdapter;
+package cat.tecnocampus.notes.application.service;
 
 import cat.tecnocampus.notes.application.portsIn.DeleteUserNotes;
 import cat.tecnocampus.notes.application.portsIn.NoteUseCases;
@@ -7,10 +7,10 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 
 @EnableBinding(ReceiverDeleteUserNotesChannel.class)
-public class DeleteUserNotesAdapter implements DeleteUserNotes {
+public class DeleteUserNotesService implements DeleteUserNotes {
     public final NoteUseCases noteUseCases;
 
-    public DeleteUserNotesAdapter(NoteUseCases noteUseCases) {
+    public DeleteUserNotesService(NoteUseCases noteUseCases) {
         this.noteUseCases = noteUseCases;
     }
 

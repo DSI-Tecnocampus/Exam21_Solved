@@ -1,11 +1,10 @@
 package cat.tecnocampus.notes.application.service;
 
+import cat.tecnocampus.notes.application.portsOut.CallUserExists;
 import cat.tecnocampus.notes.application.portsOut.NoteDAO;
 import cat.tecnocampus.notes.domain.Note;
-import cat.tecnocampus.notes.usersAdapter.UserExistsAdapter;
 import cat.tecnocampus.notes.webAdapter.UserDoesNotExistException;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -14,12 +13,10 @@ import java.util.List;
 public class NoteUseCases implements cat.tecnocampus.notes.application.portsIn.NoteUseCases {
 
     private final NoteDAO noteDAO;
-    private RestTemplate restTemplate;
-    private UserExistsAdapter userExistsAdapter;
+    private CallUserExists userExistsAdapter;
 
-    public NoteUseCases(NoteDAO noteDAO, RestTemplate restTemplate, UserExistsAdapter userExistsAdapter) {
+    public NoteUseCases(NoteDAO noteDAO, CallUserExists userExistsAdapter) {
         this.noteDAO = noteDAO;
-        this.restTemplate = restTemplate;
         this.userExistsAdapter = userExistsAdapter;
     }
 
